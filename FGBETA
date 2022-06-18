@@ -1,0 +1,163 @@
+
+        local Library =
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+        local Window = Library.CreateLib("🏈 Legend HandlesYT | Private Buyers FG | 🏈", "Serpent")
+
+        -- MAIN
+        local Main = Window:NewTab("Main")
+        local MainSection = Main:NewSection("Main")
+
+
+  MainSection:NewSlider("(FIX) Bypass Speed", "Bypassed Speed", 20, 16, function(v)
+getgenv().WalkSpeedValue = v; --set your desired walkspeed here
+
+local Player = game:service'Players'.LocalPlayer;
+
+Player.Character.Humanoid:GetPropertyChangedSignal'WalkSpeed':Connect(function()
+
+Player.Character.Humanoid.WalkSpeed = getgenv().WalkSpeedValue;
+
+end)
+
+Player.Character.Humanoid.WalkSpeed = getgenv().WalkSpeedValue;
+  end)
+
+
+     
+       
+        MainSection:NewButton(
+            "Hitbox (Y)",
+            "Press Y On/Off",
+            function()
+               if not getgenv().MTAPIMutex then loadstring(game:HttpGet("https://raw.githubusercontent.com/KikoTheDon/MT-Api-v2/main/__source/mt-api%20v2.lua", true))() end
+
+local plr = game.Players.LocalPlayer
+local hook = nil
+local enabled = false
+
+plr.Character["Left Arm"]:AddPropertyEmulator("Size") -- fake size
+plr.Character["Right Arm"]:AddPropertyEmulator("Size") -- fake size
+
+game:GetService("UserInputService").InputBegan:Connect(function(key, gpe)
+    if not enabled and not gpe and key.KeyCode == Enum.KeyCode.Y then
+        plr.Character["Left Arm"]:AddPropertyEmulator("Size") -- fake size
+        plr.Character["Right Arm"]:AddPropertyEmulator("Size") -- fake size
+        
+        for i,v in pairs(getconnections(plr.Character["Left Arm"]:GetPropertyChangedSignal("Size"))) do
+            v.Function = error
+            v:Disable() -- disable property changed
+        end
+        for i,v in pairs(getconnections(plr.Character["Right Arm"]:GetPropertyChangedSignal("Size"))) do
+            v.Function = error
+            v:Disable() -- disable property changed
+        end
+
+        plr.Character["Left Arm"].Size = Vector3.new(13, 3, 1)
+        plr.Character["Right Arm"].Size = Vector3.new(13, 3, 1)
+        plr.Character["Left Arm"].Massless = true
+        plr.Character["Right Arm"].Massless = true
+        enabled = true
+    elseif enabled and not gpe and key.KeyCode == Enum.KeyCode.Y then
+        for i,v in pairs(getconnections(plr.Character["Left Arm"]:GetPropertyChangedSignal("Size"))) do
+            v.Function = error
+            v:Disable() -- disable property changed
+        end
+        for i,v in pairs(getconnections(plr.Character["Right Arm"]:GetPropertyChangedSignal("Size"))) do
+            v.Function = error
+            v:Disable() -- disable property changed
+        end
+
+        plr.Character["Left Arm"].Size = Vector3.new(1, 2, 1)
+        plr.Character["Right Arm"].Size = Vector3.new(1, 2, 1)
+        enabled = false
+    end
+end)
+            end)
+
+            
+            MainSection:NewButton(
+            "Auto Follow Ball Carrier (Z)",
+            "Do This When Close",
+            function()
+    local tr = false
+local Mouse = game.Players.LocalPlayer:GetMouse()
+
+game:GetService("UserInputService").InputBegan:Connect(function(key, gpe)
+   if key.KeyCode == Enum.KeyCode.Z and not gpe and tr == false then
+           tr = true
+           for i, v in pairs(game.Players:GetPlayers()) do
+               local char = game.Players.LocalPlayer.Character
+               if v.Name ~= char.Name and (v.Character.Torso.CFrame.p - char.Torso.CFrame.p).Magnitude < 25 then
+                   while tr == true do
+                       if v.Character.Torso.Velocity.magnitude > 0.5 and v.Character:FindFirstChild("Football") then
+                           char.Humanoid:MoveTo(v.Character.Torso.CFrame.p + v.Character.Torso.Velocity.unit * 7)
+                       elseif v.Character.Torso.Velocity.magnitude < 0.5 and v.Character:FindFirstChild("Football") then
+                           char.Humanoid:MoveTo(v.Character.Torso.CFrame.p)
+                       elseif not v.Character:FindFirstChild("Football") then
+                           tr = false
+                       end
+                        task.wait()
+                   end
+               end
+           end
+       elseif key.KeyCode == Enum.KeyCode.Z and not gpe and tr == true then
+           tr = false
+       end
+   end
+)
+            end)
+            
+            MainSection:NewButton(
+            "JumpPower (Go For Mossing)",
+            "Boost Your Jump",
+            function()
+     local Humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+
+
+
+Humanoid.Changed:Connect(function(state)
+if state == "JumpPower" then
+Humanoid.JumpPower = 63
+end
+end)
+            end)
+            
+     
+       
+            local Cams = Window:NewTab("More")
+            local CamsSection = Cams:NewSection("More")
+            
+            CamsSection:NewButton("Zoom Out Max", "Zoom your Camrea How Far You Would Like It", function()
+   local LocalPlayer = game:GetService("Players").LocalPlayer
+        LocalPlayer.CameraMaxZoomDistance = 9e9
+        LocalPlayer.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Invisicam("Clicked")
+end)
+            
+            CamsSection:NewSlider("FOV", "Changes the FOV", 120, 16, function(v)
+            game.Workspace.CurrentCamera.FieldOfView = v
+            end)
+            
+CamsSection:NewButton("Name Generator", "Generates a Random Name FE", function()
+    loadstring(game:HttpGet('https://pastebin.com/raw/inik7xjG'))()("Clicked")
+end)
+
+CamsSection:NewButton("Trash Talk", "Hold J and It Is FE", function()
+    loadstring(game:HttpGet('https://pastebin.com/raw/UgQFnhm4'))()("Clicked")
+    end)
+       
+           local Teleports = Window:NewTab("Teleports")
+            local TeleportsSection = Teleports:NewSection("Teleports")
+            
+            TeleportsSection:NewButton("Rejoin", "Rejoin", function()
+game:GetService("TeleportService"):Teleport(8176802721, LocalPlayer)
+            end)
+            
+            TeleportsSection:NewButton("Server Hop", "Server Hop", function()
+game:GetService("TeleportService"):Teleport(8176802721, LocalPlayer)
+            end)
+
+        local Credits = Window:NewTab("Credits")
+        local CreditsSection = Credits:NewSection("Credits")
+        
+        CreditsSection:NewLabel("Made By: Legend HandlesYT")
+        
